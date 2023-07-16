@@ -4,7 +4,6 @@
   imports = [
     home-manager.nixosModules.home-manager
     stylix.nixosModules.stylix
-    ./containers
     ./hardware
     ./home
     ./modules
