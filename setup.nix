@@ -12,7 +12,6 @@
     ./modules/starship.nix
     ./modules/stylix.nix
     ./modules/timezone.nix
-    ./modules/wine.nix
   ];
 
   home-manager.sharedModules = [
@@ -66,5 +65,6 @@
   services.xserver.enable = true;
   hardware.opengl.enable = true;
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
