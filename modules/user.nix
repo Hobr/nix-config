@@ -3,10 +3,8 @@
     mutableUsers = false;
 
     users = {
-      user = {
+      hobr = {
         isNormalUser = true;
-        uid = 1000;
-        password = "user";
         extraGroups = [ "wheel" "networkmanager" ];
       };
     };
