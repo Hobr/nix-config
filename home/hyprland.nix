@@ -163,7 +163,6 @@ in
     layerrule = blur,ironbar
     layerrule = blur,notifications
 
-    windowrulev2 = nomaxsize,class:^(winecfg\.exe)$
     windowrulev2 = nomaxsize,class:^(osu\.exe)$
     windowrulev2 = opaque,class:^(kitty)$
     windowrulev2 = noblur,class:^(kitty)$
