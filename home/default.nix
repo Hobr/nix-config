@@ -17,7 +17,6 @@
     ./ncmpcpp.nix
     ./neovim.nix
     ./pqiv.nix
-    ./qutebrowser.nix
     ./swaylock.nix
     ./thunar.nix
     ./udiskie.nix
