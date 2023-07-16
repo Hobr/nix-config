@@ -18,7 +18,7 @@ in
 
   xdg.configFile."hypr/hyprland.conf".text = with config.lib.stylix.colors; /* bash */ ''
     env=XCURSOR_SIZE,24
-    env=BROWSER,librewolf
+    env=BROWSER,firefox
     env=GTK_IM_MODULE,fcitx
     env=QT_IM_MODULE,fcitx
     env=XMODIFIERS,@im=fcitx

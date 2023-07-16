@@ -11,7 +11,7 @@
     ./ironbar.nix
     ./joshuto.nix
     ./kitty.nix
-    ./librewolf.nix
+    ./firefox.nix
     ./mime-apps.nix
     ./mpv.nix
     ./ncmpcpp.nix

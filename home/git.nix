@@ -22,7 +22,7 @@
         quotePath = false;
       };
 
-      web.browser = "librewolf";
+      web.browser = "firefox";
       push.default = "simple";
       branch.autosetuprebase = "always";
       init.defaultBranch = "master";
