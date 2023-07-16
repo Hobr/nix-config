@@ -2,7 +2,7 @@
   home-manager.sharedModules = [
     ./dunst.nix
     ./fcitx.nix
-    ./fish.nix
+    ./zsh.nix
     ./git.nix
     ./gpg.nix
     ./gtk.nix

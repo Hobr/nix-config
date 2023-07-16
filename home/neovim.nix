@@ -342,7 +342,7 @@ in
         config = /* lua */ ''
           local startify = require('alpha.themes.startify')
 
-          startify.section.header.val = vim.fn.system("${pkgs.fish}/bin/fish -c 'cat (random choice (${pkgs.fd}/bin/fd . ${pkgs.ponysay}/share/ponysay/quotes --ignore-file ~/.config/fd/ponyignore)) | head -n 1'")
+          startify.section.header.val = vim.fn.system("${pkgs.zsh}/bin/zsh -c 'cat (random choice (${pkgs.fd}/bin/fd . ${pkgs.ponysay}/share/ponysay/quotes --ignore-file ~/.config/fd/ponyignore)) | head -n 1'")
 
           startify.section.top_buttons.val = {
               startify.button("e", "新しいファイル", "<cmd>ene <CR>")

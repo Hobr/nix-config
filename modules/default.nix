@@ -3,7 +3,7 @@
     ./boot.nix
     ./cdemu.nix
     ./dual-function-keys.nix
-    ./fish.nix
+    ./zsh.nix
     ./fonts.nix
     ./greetd.nix
     ./home-manager.nix

@@ -3,7 +3,7 @@
 {
   imports = [
     ./overlays
-    ./modules/fish.nix
+    ./modules/zsh.nix
     ./modules/fonts.nix
     ./modules/home-manager.nix
     ./modules/locale.nix
@@ -15,7 +15,6 @@
   ];
 
   home-manager.sharedModules = [
-    ./home/fish.nix
     ./home/gtk.nix
     ./home/htop.nix
     ./home/joshuto.nix
