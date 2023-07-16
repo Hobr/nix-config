@@ -1,17 +1,5 @@
 { pkgs, config, ... }:
-let
-  vim-nix-rummik = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "vim-nix";
-    version = "0def8020f152a51c011a707680780dac61a8989a";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "rummik";
-      repo = "vim-nix";
-      rev = "0def8020f152a51c011a707680780dac61a8989a";
-      sha256 = "sha256-Q+Jx6/MgeE2hsd/a6FqfXpAOaRcNymZW6t75hYCcH4E=";
-    };
-  };
-in
 {
   programs.bat.enable = true;
 
@@ -23,41 +11,14 @@ in
     gnumake
     cmake
 
-    # go
-    go
-    gopls
-
     # nix
     nil
     alejandra
     nixpkgs-fmt
     nixfmt
 
-    # crystal
-    crystal
-    shards
-
-    # node/yarn/deno
-    nodejs
-    nodePackages.npm
-    yarn
-    deno
-
-    # rust
-    rustc
-    rustfmt
-    cargo
-    rust-analyzer
-    bacon
-
     # markdown
     marksman
-
-    # lua
-    lua-language-server
-
-    # tex
-    texlab
   ];
 
   editorconfig = {
@@ -80,21 +41,6 @@ in
 
       "Makefile" = {
         indent_style = "tab";
-        indent_size = 4;
-      };
-
-      "*.html" = {
-        indent_style = "tab";
-        indent_size = 4;
-      };
-
-      "*.go" = {
-        indent_style = "tab";
-        indent_size = 4;
-      };
-
-      "*.rs" = {
-        indent_style = "space";
         indent_size = 4;
       };
     };
@@ -150,10 +96,6 @@ in
       nnoremap <silent> <leader>; :NvimTreeToggle<CR>
       nnoremap <silent> <leader>z :ZenMode<CR>
       vnoremap <C-s> y:silent !notify-send -t 4000 "成果" "$(tango '<C-r>0')"<CR>:<Esc>
-
-      autocmd BufNewFile,BufRead *.ecr    setlocal syntax=html
-      autocmd BufWritePre,FileWritePre * silent! call mkdir(expand('<afile>:p:h'), 'p')
-      autocmd VimEnter * silent! :cd `git rev-parse --show-toplevel`
 
       tnoremap <C-space> <C-\><C-n>
     '';
@@ -212,13 +154,8 @@ in
         config = /* lua */ ''
           local lspconfig = require('lspconfig')
           lspconfig.nil_ls.setup {}
-          lspconfig.rust_analyzer.setup {}
           lspconfig.marksman.setup {}
-          lspconfig.gopls.setup {}
-          lspconfig.lua_ls.setup {}
           lspconfig.clangd.setup {}
-          lspconfig.texlab.setup {}
-          lspconfig.crystalline.setup {}
           vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -244,29 +181,6 @@ in
         plugin = nvim-base16;
         type = "lua";
         config = "vim.cmd('colorscheme base16-${config.lib.stylix.scheme.slug}')";
-      }
-      {
-        plugin = lualine-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          local theme = require("lualine.themes.base16")
-          theme.normal.b.bg = nil
-          theme.normal.c.bg = nil
-          theme.replace.b.bg = nil
-          theme.insert.b.bg = nil
-          theme.visual.b.bg = nil
-          theme.inactive.a.bg = nil
-          theme.inactive.b.bg = nil
-          theme.inactive.c.bg = nil
-
-          require('lualine').setup {
-            options = {
-              theme = theme,
-              disabled_filetypes = {'NvimTree'}
-            },
-            sections = { lualine_c = {'%f'} }
-          }
-        '';
       }
       {
         plugin = git-blame-nvim;
@@ -321,22 +235,6 @@ in
         '';
       }
       {
-        plugin = vimtex;
-        config = /* vim */ ''
-          " Disable all keybinds so we can define our own
-          let g:vimtex_mappings_enabled = 0
-          let g:vimtex_imaps_enabled = 0
-          let g:vimtex_view_method = 'zathura'
-          let g:vimtex_compiler_latexmk = {'build_dir': '.tex'}
-
-          " Set the normal keybinds
-          nnoremap <localleader>f <plug>(vimtex-view)
-          nnoremap <localleader>g <plug>(vimtex-compile)
-          nnoremap <localleader>d <plug>(vimtex-env-delete)
-          nnoremap <localleader>c <plug>(vimtex-env-change)
-        '';
-      }
-      {
         plugin = alpha-nvim;
         type = "lua";
         config = /* lua */ ''
@@ -351,7 +249,7 @@ in
           startify.section.mru.val = { { type = "padding", val = 0 } }
           startify.section.mru_cwd.val = {
             { type = "padding", val = 1 },
-            { type = "text", val = "歴史", opts = { hl = "SpecialComment", shrink_margin = false } },
+            { type = "text", val = "历史", opts = { hl = "SpecialComment", shrink_margin = false } },
             { type = "padding", val = 1 },
             {
                 type = "group",
@@ -367,22 +265,8 @@ in
       }
       fzf-vim
       clipboard-image-nvim
-      vim-caddyfile
-      vim-graphql
-      vim-pug
-      vim-prisma
-      vim-javascript
-      vim-jsx-pretty
-      vim-vue
-      vim-over
-      vim-endwise
-      csv-vim
-      rust-vim
-      yuck-vim
       neoformat
       bufdelete-nvim
-      vim-crystal
-      vim-nix-rummik
       fcitx-vim
     ];
   };

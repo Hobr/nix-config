@@ -29,7 +29,14 @@ in
     env=SWWW_TRANSITION_DURATION,1.5
     env=SWWW_TRANSITION_FPS,240
     env=SWWW_TRANSITION_WAVE,80,40
-    monitor=,preferred,auto,1
+
+    env = LIBVA_DRIVER_NAME,nvidia
+    env = XDG_SESSION_TYPE,wayland
+    env = GBM_BACKEND,nvidia-drm
+    env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+    env = WLR_NO_HARDWARE_CURSORS,1
+
+    monitor= , 2560x1440@165, auto, 1.25
 
     exec-once = swww init
     exec-once = wpctl set-volume @DEFAULT_AUDIO_SINK@ 20%
@@ -119,46 +126,67 @@ in
       allow_workspace_cycles = yes
     }
 
-    $SUPER = ${modifier}
-    $SUPER_SHIFT = ${modifier}_SHIFT
-    $SUPER_ALT = ${modifier}_ALT
+    $mainMod = ${modifier}
 
-    bind = $SUPER_SHIFT, Return, exec, kitty
-    bind = $SUPER, Q, killactive
-    bind = $SUPER, P, exec, dunstify --icon=$(grimblast save screen) Screenshot Captured.
-    bind = , Print, exec, grimblast copy area
-    bind = $SUPER_ALT, delete, exit
-    bind = $SUPER, T, exec, tessen
-    bind = $SUPER, V, togglefloating
-    bind = $SUPER, B, centerwindow
-    bind = $SUPER, I, exec, hyprctl keyword decoration:dim_inactive $((1 - $(hyprctl getoption decoration:dim_inactive -j | jq -r ".int")))
-    bind = $SUPER, U, exec, ~/.config/hypr/gaps.sh
-    bind = $SUPER, X, pin
-    bind = $SUPER, F, fullscreen
-    bind = $SUPER, S, togglespecialworkspace
-    bind = $SUPER_SHIFT, S, movetoworkspace, special
-    bind = $SUPER_SHIFT, S, focuscurrentorlast
-    bind = $SUPER, F1, exec, killall ..ironbar-wrapper || ironbar
-    bind = $SUPER, F2, togglespecialworkspace
+    # 系统
+    bind = $mainMod, L, exec, swaylock # 锁屏
 
-    bind = $SUPER, Return, layoutmsg, swapwithmaster master
-    bind = $SUPER, J, layoutmsg, cyclenext
-    bind = $SUPER, K, layoutmsg, cycleprev
-    bind = $SUPER_SHIFT, J, layoutmsg, swapnext
-    bind = $SUPER_SHIFT, K, layoutmsg, swapprev
-    bind = $SUPER, C, splitratio, exact 0.80
-    bind = $SUPER, C, layoutmsg, orientationtop
-    bind = $SUPER_SHIFT, C, splitratio, exact 0.65
-    bind = $SUPER_SHIFT, C, layoutmsg, orientationleft
-    bind = $SUPER, H, layoutmsg, addmaster
-    bind = $SUPER, L, layoutmsg, removemaster
-    bind = $SUPER_SHIFT, H, splitratio, -0.05
-    bind = $SUPER_SHIFT, L, splitratio, +0.05
+    # 窗口控制
+    bind = $mainMod, X, killactive # 关闭窗口
+    bind = $mainMod, F, togglefloating, # 浮动窗口
+    bind = $mainMod, return, fullscreen, # 全屏
+    bindm = $mainMod, mouse:272, movewindow # 左键移动
+    bindm = $mainMod, mouse:273, resizewindow # 右键调整大小
+    bind = $mainMod SHIFT, P, pseudo, # dwindle
+    bind = $mainMod SHIFT, T, togglesplit, # dwindle
 
-    bind = $SUPER, 1, exec, hyprland-relative-workspace b
-    bind = $SUPER, 2, exec, hyprland-relative-workspace f
-    bind = $SUPER_SHIFT, 1, exec, hyprland-relative-workspace b --with-window
-    bind = $SUPER_SHIFT, 2, exec, hyprland-relative-workspace f --with-window
+    # 软件
+    bind = $mainMod, Q, exec, kitty # 终端
+    bind = $mainMod, C, exec, neovim # VSCode
+    bind = $mainMod, G, exec, firefox # Chrome
+
+    # 移动当前屏幕聚焦
+    bind = $mainMod, left, movefocus, l
+    bind = $mainMod, right, movefocus, r
+    bind = $mainMod, up, movefocus, u
+    bind = $mainMod, down, movefocus, d
+    bind = ALT, Tab, movefocus, d
+
+    # 调整窗口大小
+    ## 20px
+    bind = $mainMod SHIFT, right, resizeactive, 20 0
+    bind = $mainMod SHIFT, left, resizeactive, -20 0
+    bind = $mainMod SHIFT, up, resizeactive, 0 -20
+    bind = $mainMod SHIFT, down, resizeactive, 0 20
+    ## 40px
+    bind = $mainMod CTRL, left, resizeactive, -40 0
+    bind = $mainMod CTRL, right, resizeactive, 40 0
+    bind = $mainMod CTRL, up, resizeactive, 0 -40
+    bind = $mainMod CTRL, down, resizeactive, 0 40
+
+    # 移动窗口到工作区
+    bind = $mainMod SHIFT, 1, movetoworkspace, 1
+    bind = $mainMod SHIFT, 2, movetoworkspace, 2
+    bind = $mainMod SHIFT, 3, movetoworkspace, 3
+    bind = $mainMod SHIFT, 4, movetoworkspace, 4
+    bind = $mainMod SHIFT, 5, movetoworkspace, 5
+    bind = $mainMod SHIFT, 6, movetoworkspace, 6
+    bind = $mainMod SHIFT, 7, movetoworkspace, 7
+    bind = $mainMod SHIFT, 8, movetoworkspace, 8
+    bind = $mainMod SHIFT, 9, movetoworkspace, 9
+    bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+    # 切换工作区
+    bind = $mainMod, 1, workspace, 1
+    bind = $mainMod, 2, workspace, 2
+    bind = $mainMod, 3, workspace, 3
+    bind = $mainMod, 4, workspace, 4
+    bind = $mainMod, 5, workspace, 5
+    bind = $mainMod, 6, workspace, 6
+    bind = $mainMod, 7, workspace, 7
+    bind = $mainMod, 8, workspace, 8
+    bind = $mainMod, 9, workspace, 9
+    bind = $mainMod, 0, workspace, 10
 
     layerrule = blur,ironbar
     layerrule = blur,notifications
@@ -168,22 +196,6 @@ in
     windowrulev2 = noblur,class:^(kitty)$
     windowrulev2 = tile,class:^(.qemu-system-x86_64-wrapped)$
     windowrulev2 = opacity ${opacity} ${opacity},class:^(thunar)$
-
-    # Scroll through existing workspaces with super + scroll
-    bind = $SUPER, mouse_down, workspace, e+1
-    bind = $SUPER, mouse_up, workspace, e-1
-
-    # Move/resize windows with super + LMB/RMB and dragging
-    bindm = $SUPER, mouse:272, movewindow
-    bindm = $SUPER, mouse:273, resizewindow
-
-    # Change volume with keys
-    # TODO: Change notification once at 0/100%
-    bindl=, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && notify-send -t 2000 "Muted" "$(wpctl get-volume @DEFAULT_AUDIO_SINK@)"
-    bindl=, XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && notify-send -t 2000 "Raised volume to" "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tail -c 3)%"
-    bindl=, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && notify-send -t 2000 "Lowered volume to" "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tail -c 3)%"
-    bindl=, XF86MonBrightnessDown, exec, brightnessctl set 5%- && notify-send -t 2000 "Decreased brightness to" "$(brightnessctl get)"
-    bindl=, XF86MonBrightnessUp, exec, brightnessctl set +5% && notify-send -t 2000 "Increased brightness to" "$(brightnessctl get)"
 
     misc {
       disable_hyprland_logo = yes
