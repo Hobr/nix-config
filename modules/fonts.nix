@@ -2,28 +2,39 @@
 
 {
   fonts = {
-    enableDefaultFonts = false;
-
+    fontDir.enable = true;
     fonts = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      noto-fonts-emoji
-      maple-mono
-      font-awesome
-      nerdfonts
-      kanji-stroke-order-font
-      liberation_ttf
+      source-han-sans
+      source-han-serif
+      sarasa-gothic
+      source-code-pro
+      hack-font
+      jetbrains-mono
     ];
+  };
 
-    fontconfig = {
-      defaultFonts = {
-        serif = [ "Noto Serif CJK JP" "Noto Serif" ];
-        sansSerif = [ "Noto Sans CJK JP" "Noto Sans" ];
-        monospace = [ "Noto Mono CJK JP" "Noto Mono" ];
-      };
-
-      allowBitmaps = false;
+  fontconfig = {
+    defaultFonts = {
+      emoji = [ "Noto Color Emoji" ];
+      monospace = [
+        "Noto Sans Mono CJK SC"
+        "Sarasa Mono SC"
+        "DejaVu Sans Mono"
+      ];
+      sansSerif = [
+        "Noto Sans CJK SC"
+        "Source Han Sans SC"
+        "DejaVu Sans"
+      ];
+      serif = [
+        "Noto Serif CJK SC"
+        "Source Han Serif SC"
+        "DejaVu Serif"
+      ];
     };
+    allowBitmaps = false;
   };
 }

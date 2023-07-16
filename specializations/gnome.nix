@@ -25,11 +25,6 @@
     "autovt@tty1".enable = false;
   };
 
-  i18n.inputMethod = lib.mkForce {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ mozc ];
-  };
-
   environment.gnome.excludePackages = [ pkgs.gnome-tour ];
 
   hardware.pulseaudio.enable = false;
